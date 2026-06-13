@@ -6,6 +6,8 @@ datasource db {
   provider = "postgresql"
 }
 
+// ─── Platform enums ───────────────────────────────────────────────────────────
+
 enum UserRole {
   ADMIN
 }
@@ -25,6 +27,16 @@ enum PostStatus {
   Draft
   Published
 }
+
+// ─── Commerce enum ────────────────────────────────────────────────────────────
+
+enum ProductStatus {
+  Draft
+  Active
+  Archived
+}
+
+// ─── Platform models ──────────────────────────────────────────────────────────
 
 model User {
   id             Int      @id @default(autoincrement())
@@ -46,11 +58,14 @@ model Lead {
   createdAt DateTime   @default(now())
 }
 
+// Category is shared: blog posts + products both reference it
 model Category {
-  id    Int    @id @default(autoincrement())
-  name  String
-  slug  String @unique
-  posts Post[]
+  id       Int       @id @default(autoincrement())
+  name     String
+  slug     String    @unique
+  image    String?
+  products Product[]
+  posts    Post[]
 }
 
 model Post {
@@ -65,4 +80,67 @@ model Post {
   category      Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
+}
+
+// ─── Catalog models ───────────────────────────────────────────────────────────
+
+model Collection {
+  id          Int                 @id @default(autoincrement())
+  name        String
+  slug        String              @unique
+  description String?
+  image       String?
+  featured    Boolean             @default(false)
+  sortOrder   Int                 @default(0)
+  products    ProductCollection[]
+}
+
+model Product {
+  id          Int                 @id @default(autoincrement())
+  name        String
+  slug        String              @unique
+  description String?
+  body        String?
+  // Price stored in paisa (1 BDT = 100 paisa) to avoid float precision issues
+  basePrice   Int
+  status      ProductStatus       @default(Draft)
+  featured    Boolean             @default(false)
+  categoryId  Int?
+  category    Category?           @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  images      ProductImage[]
+  variants    ProductVariant[]
+  collections ProductCollection[]
+}
+
+model ProductCollection {
+  productId    Int
+  collectionId Int
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+
+  @@id([productId, collectionId])
+}
+
+model ProductImage {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String?
+  position  Int     @default(0)
+}
+
+model ProductVariant {
+  id            Int     @id @default(autoincrement())
+  productId     Int
+  product       Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size          String
+  wash          String?
+  sku           String? @unique
+  stock         Int     @default(0)
+  // Optional price override in paisa; falls back to product.basePrice when null
+  priceOverride Int?
 }

@@ -1,12 +1,16 @@
 {
-  "name": "byteflow-ai-labs",
+  "name": "blue-heritage-denim",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "seed": "npx prisma db seed",
     "create-admin": "tsx scripts/create-admin.ts"
   },
   "dependencies": {
