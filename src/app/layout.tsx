@@ -26,17 +26,13 @@ export const metadata: Metadata = {
   },
   description: brand.description,
   keywords: [
-    "AI automation agency",
-    "AI agent development",
-    "n8n automation",
-    "WhatsApp automation",
-    "AI consulting",
-    "n8n VPS",
-    "workflow automation Bangladesh",
-    "AI chatbot Bangladesh",
-    "AI voice agent",
-    "lead scoring automation",
-    "self-hosted automation",
+    "heritage denim",
+    "premium denim Bangladesh",
+    "blue heritage denim",
+    "selvedge denim",
+    "raw denim",
+    "premium jeans Bangladesh",
+    "denim jeans",
   ],
   openGraph: {
     type: "website",
@@ -52,14 +48,13 @@ export const metadata: Metadata = {
   },
 };
 
-const organizationSchema = {
+const storeSchema = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": "Store",
   name: brand.name,
   url: brand.siteUrl,
   description: brand.description,
   email: brand.email,
-  sameAs: Object.values(brand.social),
 };
 
 export default function RootLayout({
@@ -72,7 +67,7 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(storeSchema) }}
         />
       </head>
       <body className="bg-brand-bg text-brand-text font-body antialiased flex flex-col min-h-screen">

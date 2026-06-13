@@ -1,4 +1,4 @@
-name: byteflow-app
+name: blue-heritage-app
 services:
   app:
     build:
@@ -19,21 +19,21 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      - "traefik.http.routers.byteflow.rule=Host(`byteflowailabs.com`) || Host(`www.byteflowailabs.com`)"
-      - "traefik.http.routers.byteflow.entrypoints=websecure"
-      - "traefik.http.routers.byteflow.tls.certresolver=le"
-      - "traefik.http.routers.byteflow.middlewares=byteflow-www-redirect"
-      - "traefik.http.services.byteflow.loadbalancer.server.port=3000"
-      - "traefik.http.middlewares.byteflow-www-redirect.redirectregex.regex=^https://www\\.byteflowailabs\\.com/(.*)"
-      - "traefik.http.middlewares.byteflow-www-redirect.redirectregex.replacement=https://byteflowailabs.com/$${1}"
-      - "traefik.http.middlewares.byteflow-www-redirect.redirectregex.permanent=true"
+      - "traefik.http.routers.heritage.rule=Host(`blueheritageenim.com`) || Host(`www.blueheritageenim.com`)"
+      - "traefik.http.routers.heritage.entrypoints=websecure"
+      - "traefik.http.routers.heritage.tls.certresolver=le"
+      - "traefik.http.routers.heritage.middlewares=heritage-www-redirect"
+      - "traefik.http.services.heritage.loadbalancer.server.port=3000"
+      - "traefik.http.middlewares.heritage-www-redirect.redirectregex.regex=^https://www\\.blueheritageenim\\.com/(.*)"
+      - "traefik.http.middlewares.heritage-www-redirect.redirectregex.replacement=https://blueheritageenim.com/$${1}"
+      - "traefik.http.middlewares.heritage-www-redirect.redirectregex.permanent=true"
   db:
     image: postgres:16
     restart: unless-stopped
     environment:
-      POSTGRES_USER: byteflow
+      POSTGRES_USER: heritage
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: byteflow
+      POSTGRES_DB: heritage
     networks:
       - internal
     volumes:

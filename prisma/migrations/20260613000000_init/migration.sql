@@ -1,4 +1,4 @@
--- ByteFlow AI Labs — initial schema
+-- Blue Heritage Denim — clean init migration
 -- CreateEnum
 CREATE TYPE "UserRole" AS ENUM ('ADMIN');
 

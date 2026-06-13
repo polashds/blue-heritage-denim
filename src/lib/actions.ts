@@ -7,11 +7,8 @@ import { COMPANY_EMAIL } from "@/lib/constants";
 
 const ContactSchema = z.object({
   name: z.string().min(1),
-  company: z.string().optional(),
   email: z.string().email().optional().or(z.literal("")),
   phone: z.string().optional(),
-  service: z.string().optional(),
-  budget: z.string().optional(),
   message: z.string().optional(),
 });
 
@@ -30,11 +27,8 @@ export async function submitContact(
 ): Promise<{ success: boolean; error?: string }> {
   const raw = {
     name: formData.get("name"),
-    company: formData.get("company") || undefined,
     email: formData.get("email") || undefined,
     phone: formData.get("phone") || undefined,
-    service: formData.get("service") || undefined,
-    budget: formData.get("budget") || undefined,
     message: formData.get("message") || undefined,
   };
 
@@ -45,11 +39,8 @@ export async function submitContact(
     const lead = await prisma.lead.create({
       data: {
         name: parsed.data.name,
-        company: parsed.data.company || null,
         email: parsed.data.email || null,
         phone: parsed.data.phone || null,
-        service: parsed.data.service || null,
-        budget: parsed.data.budget || null,
         message: parsed.data.message || null,
         source: LeadSource.Contact,
       },
@@ -58,11 +49,8 @@ export async function submitContact(
     fireWebhook({
       id: lead.id,
       name: lead.name,
-      company: lead.company,
       email: lead.email,
       phone: lead.phone,
-      service: lead.service,
-      budget: lead.budget,
       message: lead.message,
       source: lead.source,
       createdAt: lead.createdAt,

@@ -13,7 +13,6 @@ enum UserRole {
 enum LeadSource {
   Contact
   Chatbot
-  LeadMagnet
 }
 
 enum LeadStatus {
@@ -39,11 +38,8 @@ model User {
 model Lead {
   id        Int        @id @default(autoincrement())
   name      String
-  company   String?
   email     String?
   phone     String?
-  service   String?
-  budget    String?
   message   String?
   source    LeadSource
   status    LeadStatus @default(New)

@@ -11,13 +11,13 @@ interface Message {
 }
 
 const CHIPS = [
-  "What do you do?",
-  "How does AI automation work?",
-  "Can you build a custom workflow?",
+  "What sizes do you carry?",
+  "How do I find my fit?",
+  "Tell me about your denim",
   "Get in touch",
 ];
 
-const TEASER_KEY = "bf:teaser_seen";
+const TEASER_KEY = "bhd:teaser_seen";
 
 export default function ChatWidget() {
   const { enabled, greeting, teaserDelaySeconds } = brand.chatWidget;
@@ -32,7 +32,6 @@ export default function ChatWidget() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const shownRef = useRef(false);
 
-  // Proactive teaser: timer + scroll trigger, once per session
   useEffect(() => {
     if (!enabled) return;
     try {
@@ -60,7 +59,6 @@ export default function ChatWidget() {
     };
   }, [enabled, teaserDelaySeconds]);
 
-  // Dismiss teaser when chat opens for any reason
   useEffect(() => {
     if (open) setTeaserVisible(false);
   }, [open]);
@@ -71,8 +69,8 @@ export default function ChatWidget() {
 
   useEffect(() => {
     function handleOpen() { setOpen(true); }
-    window.addEventListener("byteflow:openChat", handleOpen);
-    return () => window.removeEventListener("byteflow:openChat", handleOpen);
+    window.addEventListener("bhd:openChat", handleOpen);
+    return () => window.removeEventListener("bhd:openChat", handleOpen);
   }, []);
 
   async function sendMessage(text: string) {
@@ -115,33 +113,27 @@ export default function ChatWidget() {
       {/* Chat panel */}
       {open && (
         <div
-          className="w-[min(320px,calc(100vw-1.5rem))] sm:w-[380px] flex flex-col bg-brand-surface border border-primary/30 overflow-hidden animate-slide-up"
+          className="w-[min(320px,calc(100vw-1.5rem))] sm:w-[380px] flex flex-col bg-brand-surface border border-white/10 overflow-hidden animate-slide-up"
           style={{
             height: "min(580px, calc(100dvh - 100px))",
-            boxShadow: "0 24px 64px rgba(0,0,0,0.85), 0 0 0 1px rgba(37,99,235,0.08)",
+            boxShadow: "0 24px 64px rgba(0,0,0,0.85)",
           }}
         >
           {/* Header */}
-          <div className="flex items-center gap-3 px-4 py-3.5 border-b border-primary/15 bg-brand-bg flex-shrink-0">
-            <div
-              className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
-              style={{
-                background: "linear-gradient(135deg, #2563EB, #22D3EE)",
-                boxShadow: "0 0 14px rgba(37,99,235,0.45)",
-              }}
-            >
-              <span className="font-heading text-white text-[15px] font-semibold leading-none">
-                BF
+          <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/[0.06] bg-brand-bg flex-shrink-0">
+            <div className="w-10 h-10 bg-primary flex items-center justify-center flex-shrink-0">
+              <span className="font-heading text-white text-[13px] font-semibold leading-none tracking-widest">
+                BH
               </span>
             </div>
 
             <div className="flex-1 min-w-0">
-              <p className="font-heading text-brand-text text-[18px] font-normal leading-none tracking-wide">
-                ByteFlow AI
+              <p className="font-heading text-brand-text text-[16px] font-semibold leading-none tracking-wide">
+                Heritage AI
               </p>
               <p className="flex items-center gap-1.5 font-body text-[11px] text-[#4ade80] mt-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#4ade80] flex-shrink-0" />
-                Online 24/7
+                Online now
               </p>
             </div>
 
@@ -166,10 +158,7 @@ export default function ChatWidget() {
                     {m.text}
                   </div>
                 ) : (
-                  <div
-                    className="max-w-[84%] px-3.5 py-2.5 font-body text-[13px] leading-relaxed text-white font-medium"
-                    style={{ background: "linear-gradient(135deg, #2563EB, #22D3EE)" }}
-                  >
+                  <div className="max-w-[84%] px-3.5 py-2.5 font-body text-[13px] leading-relaxed text-white font-medium bg-primary">
                     {m.text}
                   </div>
                 )}
@@ -195,14 +184,14 @@ export default function ChatWidget() {
           {/* Suggestion chips */}
           {showChips && (
             <div
-              className="flex gap-2 px-4 py-2.5 border-t border-primary/10 overflow-x-auto flex-shrink-0"
+              className="flex gap-2 px-4 py-2.5 border-t border-white/[0.06] overflow-x-auto flex-shrink-0"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" } as React.CSSProperties}
             >
               {CHIPS.map((chip) => (
                 <button
                   key={chip}
                   onClick={() => sendMessage(chip)}
-                  className="flex-shrink-0 px-3 py-1.5 bg-primary/8 border border-primary/25 text-accent font-body text-[11px] whitespace-nowrap hover:bg-primary/18 hover:border-primary/50 transition-colors duration-200"
+                  className="flex-shrink-0 px-3 py-1.5 border border-white/10 text-brand-muted font-body text-[11px] whitespace-nowrap hover:border-white/25 hover:text-brand-text transition-colors duration-200"
                 >
                   {chip}
                 </button>
@@ -211,21 +200,20 @@ export default function ChatWidget() {
           )}
 
           {/* Input row */}
-          <div className="border-t border-primary/15 px-3 py-3 flex gap-2 bg-brand-bg flex-shrink-0">
+          <div className="border-t border-white/[0.06] px-3 py-3 flex gap-2 bg-brand-bg flex-shrink-0">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-              placeholder="Ask about AI automation…"
-              className="flex-1 bg-brand-surface border border-primary/15 text-brand-text placeholder:text-brand-muted/40 font-body text-[13px] px-3.5 py-2.5 focus:outline-none focus:border-primary/50 transition-colors"
+              placeholder="Ask about sizing, fit, or collections…"
+              className="flex-1 bg-brand-surface border border-white/10 text-brand-text placeholder:text-brand-muted/40 font-body text-[13px] px-3.5 py-2.5 focus:outline-none focus:border-white/25 transition-colors"
             />
             <button
               onClick={() => sendMessage(input)}
               disabled={loading || !input.trim()}
               aria-label="Send message"
-              className="w-10 h-10 disabled:opacity-40 text-white flex items-center justify-center flex-shrink-0 transition-opacity duration-200"
-              style={{ background: "linear-gradient(135deg, #2563EB, #22D3EE)" }}
+              className="w-10 h-10 disabled:opacity-40 text-white flex items-center justify-center flex-shrink-0 transition-opacity duration-200 bg-primary"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -247,10 +235,10 @@ export default function ChatWidget() {
       {/* Proactive teaser bubble */}
       {teaserVisible && !open && (
         <div
-          className="animate-slide-up flex items-start gap-2 bg-brand-surface border border-primary/30 px-4 py-3"
+          className="animate-slide-up flex items-start gap-2 bg-brand-surface border border-white/10 px-4 py-3"
           style={{
             maxWidth: "min(260px, calc(100vw - 5rem))",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.7), 0 0 0 1px rgba(37,99,235,0.12)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.7)",
           }}
         >
           <button
@@ -274,10 +262,9 @@ export default function ChatWidget() {
       <button
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close chat" : "Open AI assistant"}
-        className="w-16 h-16 rounded-full text-white flex items-center justify-center transition-transform duration-200 hover:scale-110 animate-pulse-primary"
-        style={{ background: "linear-gradient(135deg, #2563EB, #22D3EE)" }}
+        className="w-14 h-14 text-white flex items-center justify-center transition-all duration-200 hover:scale-105 bg-primary"
       >
-        {open ? <X className="w-6 h-6" /> : <Bot className="w-6 h-6" />}
+        {open ? <X className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
       </button>
     </div>
   );
