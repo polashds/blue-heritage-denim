@@ -144,6 +144,9 @@ export default async function ProductPage({ params }: { params: Params }) {
             <VariantSelectors
               variants={product.variants}
               basePrice={product.basePrice}
+              productSlug={product.slug}
+              productName={product.name}
+              imageUrl={product.images[0]?.url ?? null}
             />
 
             {/* Body / detailed copy */}

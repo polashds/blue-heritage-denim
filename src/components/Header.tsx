@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navLinks } from "@/lib/nav";
+import { useCart } from "@/lib/cart";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { count, openDrawer } = useCart();
 
   useEffect(() => { setOpen(false); }, [pathname]);
 
@@ -51,18 +53,45 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Hamburger — mobile */}
-          <button
-            className="md:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10 shrink-0"
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-          >
+          {/* Cart + hamburger */}
+          <div className="flex items-center gap-1 shrink-0">
+            {/* Cart icon — always visible */}
+            <button
+              onClick={openDrawer}
+              className="relative w-10 h-10 flex items-center justify-center text-brand-muted hover:text-brand-text transition-colors"
+              aria-label={`Open cart${count > 0 ? ` (${count} items)` : ""}`}
+            >
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path
+                  d="M2 2h2.5L7 13h9l2.5-8H5"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle cx="8" cy="16.5" r="1.5" fill="currentColor" />
+                <circle cx="15" cy="16.5" r="1.5" fill="currentColor" />
+              </svg>
+              {count > 0 && (
+                <span className="absolute top-0.5 right-0.5 w-[18px] h-[18px] bg-primary text-white text-[8px] font-bold rounded-full flex items-center justify-center leading-none select-none">
+                  {count > 9 ? "9+" : count}
+                </span>
+              )}
+            </button>
+
+            {/* Hamburger — mobile only */}
+            <button
+              className="md:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10 shrink-0"
+              onClick={() => setOpen((v) => !v)}
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              aria-controls="mobile-nav"
+            >
             <span className={`block w-5 h-px bg-brand-text origin-center transition-all duration-300 ${open ? "translate-y-[6px] rotate-45" : ""}`} />
             <span className={`block w-3.5 h-px bg-brand-text transition-all duration-300 ${open ? "opacity-0 scale-x-0" : ""}`} />
             <span className={`block w-5 h-px bg-brand-text origin-center transition-all duration-300 ${open ? "-translate-y-[6px] -rotate-45" : ""}`} />
-          </button>
+            </button>
+          </div>
         </div>
       </header>
 

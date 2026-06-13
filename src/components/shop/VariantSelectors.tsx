@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { formatPrice } from "@/lib/format";
+import { useCart } from "@/lib/cart";
 
 interface Variant {
   size: string;
@@ -10,13 +11,23 @@ interface Variant {
   priceOverride: number | null;
 }
 
+interface Props {
+  variants: Variant[];
+  basePrice: number;
+  productSlug: string;
+  productName: string;
+  imageUrl: string | null;
+}
+
 export default function VariantSelectors({
   variants,
   basePrice,
-}: {
-  variants: Variant[];
-  basePrice: number;
-}) {
+  productSlug,
+  productName,
+  imageUrl,
+}: Props) {
+  const { addItem } = useCart();
+
   const sizes = [...new Set(variants.map((v) => v.size))];
   const washes = [
     ...new Set(variants.map((v) => v.wash).filter(Boolean)),
@@ -26,6 +37,8 @@ export default function VariantSelectors({
   const [selectedWash, setSelectedWash] = useState<string | null>(
     washes.length === 1 ? washes[0] : null
   );
+  const [qty, setQty] = useState(1);
+  const [added, setAdded] = useState(false);
 
   function isSizeAvailable(size: string) {
     return variants.some(
@@ -61,9 +74,24 @@ export default function VariantSelectors({
       ? selectedVariant.priceOverride
       : basePrice;
 
+  function handleAddToCart() {
+    if (!selectedSize || isOutOfStock || !selectedVariant) return;
+    addItem({
+      productSlug,
+      productName,
+      imageUrl,
+      size: selectedSize,
+      wash: selectedWash,
+      unitPrice: displayPrice,
+      qty,
+    });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
+  }
+
   return (
     <div className="space-y-6">
-      {/* Price (updates if variant has override) */}
+      {/* Price */}
       <p className="font-heading font-semibold text-brand-indigo text-2xl">
         {formatPrice(displayPrice)}
       </p>
@@ -76,9 +104,7 @@ export default function VariantSelectors({
               Wash / Colour
             </span>
             {selectedWash && (
-              <span className="font-body text-sm text-brand-text">
-                {selectedWash}
-              </span>
+              <span className="font-body text-sm text-brand-text">{selectedWash}</span>
             )}
           </div>
           <div className="flex flex-wrap gap-2">
@@ -115,9 +141,7 @@ export default function VariantSelectors({
             Size
           </span>
           {selectedSize && (
-            <span className="font-body text-sm text-brand-text">
-              {selectedSize}
-            </span>
+            <span className="font-body text-sm text-brand-text">{selectedSize}</span>
           )}
         </div>
         <div className="flex flex-wrap gap-2">
@@ -127,9 +151,10 @@ export default function VariantSelectors({
               <button
                 key={size}
                 type="button"
-                onClick={() =>
-                  setSelectedSize(size === selectedSize ? null : size)
-                }
+                onClick={() => {
+                  setSelectedSize(size === selectedSize ? null : size);
+                  setAdded(false);
+                }}
                 disabled={!available}
                 className={`h-10 min-w-[44px] px-3 font-body text-sm border transition-colors ${
                   selectedSize === size
@@ -165,25 +190,60 @@ export default function VariantSelectors({
         </p>
       )}
 
-      {/* Add to Cart */}
-      <button
-        type="button"
-        disabled={!selectedSize || isOutOfStock}
-        className={`w-full h-[52px] font-body text-[11px] font-semibold tracking-[0.22em] uppercase transition-all duration-200 ${
-          !selectedSize || isOutOfStock
-            ? "bg-brand-surface text-brand-muted cursor-not-allowed"
-            : "bg-brand-indigo text-white hover:bg-primary"
-        }`}
-      >
-        {isOutOfStock
-          ? "Out of Stock"
-          : !selectedSize
-          ? "Select a Size"
-          : "Add to Cart"}
-      </button>
+      {/* Quantity + Add to Cart */}
+      <div className="flex gap-3">
+        {/* Qty stepper */}
+        <div className="flex items-center border border-brand-border shrink-0">
+          <button
+            type="button"
+            onClick={() => setQty((q) => Math.max(1, q - 1))}
+            className="w-10 h-[52px] flex items-center justify-center text-lg text-brand-muted hover:text-brand-text transition-colors"
+            aria-label="Decrease quantity"
+          >
+            −
+          </button>
+          <span className="w-10 text-center font-body text-sm text-brand-text select-none">
+            {qty}
+          </span>
+          <button
+            type="button"
+            onClick={() =>
+              setQty((q) =>
+                stock !== null ? Math.min(q + 1, stock) : q + 1
+              )
+            }
+            className="w-10 h-[52px] flex items-center justify-center text-lg text-brand-muted hover:text-brand-text transition-colors"
+            aria-label="Increase quantity"
+          >
+            +
+          </button>
+        </div>
+
+        {/* Add to Cart */}
+        <button
+          type="button"
+          onClick={handleAddToCart}
+          disabled={!selectedSize || isOutOfStock}
+          className={`flex-1 h-[52px] font-body text-[11px] font-semibold tracking-[0.22em] uppercase transition-all duration-200 ${
+            added
+              ? "bg-green-700 text-white"
+              : !selectedSize || isOutOfStock
+              ? "bg-brand-surface text-brand-muted cursor-not-allowed"
+              : "bg-brand-indigo text-white hover:bg-primary"
+          }`}
+        >
+          {added
+            ? "Added ✓"
+            : isOutOfStock
+            ? "Out of Stock"
+            : !selectedSize
+            ? "Select a Size"
+            : "Add to Cart"}
+        </button>
+      </div>
 
       <p className="font-body text-[10px] text-brand-muted text-center">
-        Cart &amp; checkout coming soon · Free shipping over ৳2,000
+        Free shipping on orders over ৳2,000
       </p>
     </div>
   );

@@ -144,3 +144,63 @@ model ProductVariant {
   // Optional price override in paisa; falls back to product.basePrice when null
   priceOverride Int?
 }
+
+// ─── Commerce — orders ────────────────────────────────────────────────────────
+
+enum PaymentMethod {
+  COD
+  BankTransfer
+  SSLCommerz
+  BKash
+  Stripe
+}
+
+enum PaymentStatus {
+  Pending
+  Paid
+  Failed
+  Refunded
+}
+
+enum OrderStatus {
+  Pending
+  Confirmed
+  Processing
+  Shipped
+  Delivered
+  Cancelled
+}
+
+model Order {
+  id            Int           @id @default(autoincrement())
+  orderNumber   String        @unique
+  customerName  String
+  email         String
+  phone         String
+  address       String
+  city          String
+  district      String
+  notes         String?
+  // All monetary values stored in paisa (1 BDT = 100 paisa)
+  subtotal      Int
+  shipping      Int
+  total         Int
+  paymentMethod PaymentMethod
+  paymentStatus PaymentStatus @default(Pending)
+  orderStatus   OrderStatus   @default(Pending)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id          Int    @id @default(autoincrement())
+  orderId     Int
+  order       Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  // Snapshot of product details at time of order
+  productName String
+  size        String
+  wash        String?
+  unitPrice   Int
+  qty         Int
+}
