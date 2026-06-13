@@ -24,7 +24,7 @@ export default function AdminLayoutShell({
   }
 
   return (
-    <div className="flex flex-col flex-1 min-h-screen bg-brand-bg">
+    <div className="admin-dark flex flex-col flex-1 min-h-screen bg-brand-bg">
       {/* Top bar */}
       <header className="border-b border-primary/20 bg-brand-surface/80 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-6">

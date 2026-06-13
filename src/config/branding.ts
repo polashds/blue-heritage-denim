@@ -24,11 +24,13 @@ export const brand = {
     teaserDelaySeconds: 10,
   },
   colors: {
-    primary: "#2563EB",
-    bg: "#0F172A",
-    surface: "#1E293B",
-    text: "#F8FAFC",
-    muted: "#94A3B8",
-    border: "rgba(248,250,252,0.08)",
+    primary: "#2B5489",   // denim-blue
+    indigo:  "#1E3A5F",   // deep indigo (headings)
+    tan:     "#B5895A",   // leather-tan (sparing)
+    bg:      "#FAF7F0",   // canvas cream
+    surface: "#F0EBE0",   // warm off-white
+    text:    "#1C1C1C",   // charcoal
+    muted:   "#6B6560",   // warm medium gray
+    border:  "#E7E1D6",   // soft border
   },
 } as const;

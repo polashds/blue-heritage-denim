@@ -61,13 +61,13 @@ const footerNav = [
 
 export default function Footer() {
   return (
-    <footer className="bg-brand-bg border-t border-white/[0.06]">
+    <footer className="bg-brand-bg border-t border-brand-border">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="space-y-5 lg:col-span-2">
             <Link href="/" className="inline-flex flex-col leading-none">
-              <span className="font-heading font-bold text-brand-text text-[18px] tracking-[0.18em] uppercase">
+              <span className="font-heading font-bold text-brand-indigo text-[18px] tracking-[0.18em] uppercase">
                 Blue Heritage
               </span>
               <span className="font-body font-light text-brand-muted text-[9px] tracking-[0.55em] uppercase mt-0.5">
@@ -85,7 +85,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-8 h-8 flex items-center justify-center border border-white/10 text-brand-muted hover:text-brand-text hover:border-white/25 transition-colors duration-200"
+                  className="w-8 h-8 flex items-center justify-center border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-muted transition-colors duration-200"
                 >
                   {icon}
                 </a>
@@ -116,7 +116,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-16 pt-8 border-t border-brand-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="font-body text-brand-muted text-xs">
             © {new Date().getFullYear()} Blue Heritage Denim. All rights reserved.
           </p>

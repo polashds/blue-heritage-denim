@@ -1,18 +1,31 @@
 @import "tailwindcss";
 
 @theme {
-  /* Blue Heritage Denim — brand tokens */
-  --color-primary: #2563EB;
-  --color-brand-bg: #0F172A;
-  --color-brand-surface: #1E293B;
-  --color-brand-text: #F8FAFC;
-  --color-brand-muted: #94A3B8;
+  /* ── Blue Heritage Denim — heritage palette ───────────────────────────── */
+  --color-primary:       #2B5489;   /* denim-blue — buttons, active links  */
+  --color-accent:        #2B5489;   /* alias kept for legacy references     */
+  --color-brand-bg:      #FAF7F0;   /* canvas cream — page background       */
+  --color-brand-surface: #F0EBE0;   /* warm off-white — cards, panels       */
+  --color-brand-text:    #1C1C1C;   /* charcoal — body text                 */
+  --color-brand-muted:   #6B6560;   /* warm medium gray — secondary text    */
+  --color-brand-indigo:  #1E3A5F;   /* deep indigo — headings               */
+  --color-brand-tan:     #B5895A;   /* leather tan — category labels        */
+  --color-brand-border:  #E7E1D6;   /* soft border                          */
 
   --font-heading: var(--font-geist);
-  --font-body: var(--font-inter);
+  --font-body:    var(--font-inter);
 
   --animate-slide-up: slideUp 0.28s cubic-bezier(0.16,1,0.3,1) both;
   --animate-type-dot: typeDot 1.3s ease-in-out infinite;
+}
+
+/* Admin panel: restore dark tokens for all back-office children */
+.admin-dark {
+  --color-brand-bg:      #0F172A;
+  --color-brand-surface: #1E293B;
+  --color-brand-text:    #F8FAFC;
+  --color-brand-muted:   #94A3B8;
+  --color-brand-border:  rgba(255, 255, 255, 0.06);
 }
 
 @keyframes slideUp {

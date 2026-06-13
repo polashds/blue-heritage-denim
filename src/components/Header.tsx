@@ -22,11 +22,11 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-brand-bg/95 backdrop-blur-md border-b border-white/[0.06]">
+      <header className="sticky top-0 z-50 bg-brand-bg/95 backdrop-blur-md border-b border-brand-border">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 h-[72px] flex items-center justify-between gap-8">
           {/* Wordmark */}
           <Link href="/" className="shrink-0 flex flex-col leading-none group">
-            <span className="font-heading font-bold text-brand-text text-[17px] tracking-[0.18em] uppercase">
+            <span className="font-heading font-bold text-brand-indigo text-[17px] tracking-[0.18em] uppercase">
               Blue Heritage
             </span>
             <span className="font-body font-light text-brand-muted text-[9px] tracking-[0.55em] uppercase mt-0.5">
@@ -41,8 +41,8 @@ export default function Header() {
                 key={href}
                 href={href}
                 className={`font-body text-[11px] font-medium tracking-[0.18em] uppercase transition-colors duration-200 ${
-                  pathname === href
-                    ? "text-brand-text"
+                  pathname === href || pathname.startsWith(href + "/")
+                    ? "text-primary"
                     : "text-brand-muted hover:text-brand-text"
                 }`}
               >
@@ -51,7 +51,7 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Hamburger — mobile only */}
+          {/* Hamburger — mobile */}
           <button
             className="md:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10 shrink-0"
             onClick={() => setOpen((v) => !v)}
@@ -68,7 +68,7 @@ export default function Header() {
 
       {/* Backdrop */}
       <div
-        className={`md:hidden fixed inset-0 z-[55] bg-black/70 transition-opacity duration-300 ${
+        className={`md:hidden fixed inset-0 z-[55] bg-black/40 transition-opacity duration-300 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setOpen(false)}
@@ -79,14 +79,14 @@ export default function Header() {
       <nav
         id="mobile-nav"
         aria-label="Mobile navigation"
-        className={`md:hidden fixed top-0 right-0 bottom-0 z-[60] w-[280px] bg-brand-bg border-l border-white/[0.06] flex flex-col transition-transform duration-300 ease-in-out ${
+        className={`md:hidden fixed top-0 right-0 bottom-0 z-[60] w-[280px] bg-brand-bg border-l border-brand-border flex flex-col transition-transform duration-300 ease-in-out ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
         aria-hidden={!open}
       >
-        <div className="flex items-center justify-between px-6 h-[72px] border-b border-white/[0.06] shrink-0">
+        <div className="flex items-center justify-between px-6 h-[72px] border-b border-brand-border shrink-0">
           <Link href="/" onClick={() => setOpen(false)} className="flex flex-col leading-none">
-            <span className="font-heading font-bold text-brand-text text-[16px] tracking-[0.18em] uppercase">
+            <span className="font-heading font-bold text-brand-indigo text-[16px] tracking-[0.18em] uppercase">
               Blue Heritage
             </span>
             <span className="font-body font-light text-brand-muted text-[9px] tracking-[0.55em] uppercase mt-0.5">
@@ -110,7 +110,9 @@ export default function Header() {
               key={href}
               href={href}
               onClick={() => setOpen(false)}
-              className="font-body text-[11px] font-medium text-brand-muted hover:text-brand-text tracking-[0.18em] uppercase transition-colors duration-200 py-4 border-b border-white/[0.06] last:border-0"
+              className={`font-body text-[11px] font-medium tracking-[0.18em] uppercase transition-colors duration-200 py-4 border-b border-brand-border last:border-0 ${
+                pathname === href ? "text-primary" : "text-brand-muted hover:text-brand-text"
+              }`}
             >
               {label}
             </Link>
