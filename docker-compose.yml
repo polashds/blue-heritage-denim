@@ -1,0 +1,50 @@
+name: byteflow-app
+services:
+  app:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_GA4_ID: ${NEXT_PUBLIC_GA4_ID:-}
+        NEXT_PUBLIC_META_PIXEL_ID: ${NEXT_PUBLIC_META_PIXEL_ID:-}
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      - db
+    networks:
+      - internal
+      - proxy
+    volumes:
+      - uploads:/app/public/uploads
+    mem_limit: 1g
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.byteflow.rule=Host(`byteflowailabs.com`) || Host(`www.byteflowailabs.com`)"
+      - "traefik.http.routers.byteflow.entrypoints=websecure"
+      - "traefik.http.routers.byteflow.tls.certresolver=le"
+      - "traefik.http.routers.byteflow.middlewares=byteflow-www-redirect"
+      - "traefik.http.services.byteflow.loadbalancer.server.port=3000"
+      - "traefik.http.middlewares.byteflow-www-redirect.redirectregex.regex=^https://www\\.byteflowailabs\\.com/(.*)"
+      - "traefik.http.middlewares.byteflow-www-redirect.redirectregex.replacement=https://byteflowailabs.com/$${1}"
+      - "traefik.http.middlewares.byteflow-www-redirect.redirectregex.permanent=true"
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: byteflow
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: byteflow
+    networks:
+      - internal
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    mem_limit: 1g
+
+networks:
+  internal:
+  proxy:
+    external: true
+
+volumes:
+  pgdata:
+  uploads:
