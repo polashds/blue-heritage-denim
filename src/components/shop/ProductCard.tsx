@@ -11,7 +11,7 @@ export default function ProductCard({ product }: { product: ProductListItem }) {
   return (
     <Link href={`/products/${product.slug}`} className="group block">
       {/* Image area */}
-      <div className="aspect-[3/4] overflow-hidden bg-brand-surface relative">
+      <div className="aspect-[4/5] overflow-hidden bg-brand-surface relative">
         {primary ? (
           <>
             <SmartImage

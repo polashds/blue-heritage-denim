@@ -23,7 +23,7 @@ export default function ImageGallery({
   return (
     <div>
       {/* Main image */}
-      <div className="aspect-[3/4] relative overflow-hidden bg-brand-surface">
+      <div className="aspect-[4/5] relative overflow-hidden bg-brand-surface">
         {current ? (
           <SmartImage
             src={current.url}
@@ -46,7 +46,7 @@ export default function ImageGallery({
               key={img.id}
               onClick={() => setSelected(i)}
               aria-label={`View image ${i + 1}`}
-              className={`relative w-16 h-[calc(4/3*4rem)] shrink-0 overflow-hidden bg-brand-surface border-b-2 transition-colors duration-150 ${
+              className={`relative w-16 aspect-[4/5] shrink-0 overflow-hidden bg-brand-surface border-b-2 transition-colors duration-150 ${
                 i === selected
                   ? "border-brand-indigo"
                   : "border-transparent opacity-60 hover:opacity-100"

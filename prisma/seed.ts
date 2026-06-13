@@ -128,8 +128,15 @@ async function main() {
       categoryId: men.id,
       collections: [heritage.id, bestSellers.id],
       images: [
-        { url: "/assets/products/heritage-slim-1.jpg", alt: "Heritage Slim front", position: 0 },
-        { url: "/assets/products/heritage-slim-2.jpg", alt: "Heritage Slim back", position: 1 },
+        { url: "/products/heritage-slim-jeans-1.png",  alt: "Heritage Slim Jeans", position: 0 },
+        { url: "/products/heritage-slim-jeans-2.png",  alt: "Heritage Slim Jeans", position: 1 },
+        { url: "/products/heritage-slim-jeans-3.png",  alt: "Heritage Slim Jeans", position: 2 },
+        { url: "/products/heritage-slim-jeans-4.png",  alt: "Heritage Slim Jeans", position: 3 },
+        { url: "/products/heritage-slim-jeans-5.jpeg", alt: "Heritage Slim Jeans", position: 4 },
+        { url: "/products/heritage-slim-jeans-6.jpeg", alt: "Heritage Slim Jeans", position: 5 },
+        { url: "/products/heritage-slim-jeans-7.jpeg", alt: "Heritage Slim Jeans", position: 6 },
+        { url: "/products/heritage-slim-jeans-8.jpeg", alt: "Heritage Slim Jeans", position: 7 },
+        { url: "/products/heritage-slim-jeans-9.jpeg", alt: "Heritage Slim Jeans", position: 8 },
       ],
       variants: [
         { size: "28", wash: "Midnight", sku: "HS-28-MN", stock: 10 },
