@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import ImagePlaceholder from "./ImagePlaceholder";
-import SmartImage from "./SmartImage";
+import ProductImage, { PLACEHOLDER } from "./ProductImage";
 
 interface GalleryImage {
   id: number;
@@ -24,18 +23,14 @@ export default function ImageGallery({
     <div>
       {/* Main image */}
       <div className="aspect-[4/5] relative overflow-hidden bg-brand-surface">
-        {current ? (
-          <SmartImage
-            src={current.url}
-            alt={current.alt ?? productName}
-            fill
-            sizes="(max-width: 1024px) 100vw, 55vw"
-            className="object-cover"
-            priority
-          />
-        ) : (
-          <ImagePlaceholder alt={productName} />
-        )}
+        <ProductImage
+          src={current?.url ?? PLACEHOLDER}
+          alt={current?.alt ?? productName}
+          fill
+          sizes="(max-width: 1024px) 100vw, 55vw"
+          className="object-cover"
+          priority
+        />
       </div>
 
       {/* Thumbnails */}
@@ -52,7 +47,7 @@ export default function ImageGallery({
                   : "border-transparent opacity-60 hover:opacity-100"
               }`}
             >
-              <SmartImage
+              <ProductImage
                 src={img.url}
                 alt={img.alt ?? productName}
                 fill

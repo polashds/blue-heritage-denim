@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
-import SmartImage from "@/components/shop/SmartImage";
-import ImagePlaceholder from "@/components/shop/ImagePlaceholder";
+import ProductImage, { PLACEHOLDER } from "@/components/shop/ProductImage";
 
 const FLAT_SHIPPING = 12000; // ৳120 in paisa
 const FREE_THRESHOLD = 200000; // ৳2,000 in paisa
@@ -370,17 +369,13 @@ export default function CheckoutPage() {
                 {items.map((item) => (
                   <div key={item.key} className="flex gap-3">
                     <div className="w-14 aspect-[3/4] shrink-0 relative overflow-hidden bg-brand-surface">
-                      {item.imageUrl ? (
-                        <SmartImage
-                          src={item.imageUrl}
-                          alt={item.productName}
-                          fill
-                          sizes="56px"
-                          className="object-cover"
-                        />
-                      ) : (
-                        <ImagePlaceholder alt={item.productName} />
-                      )}
+                      <ProductImage
+                        src={item.imageUrl ?? PLACEHOLDER}
+                        alt={item.productName}
+                        fill
+                        sizes="56px"
+                        className="object-cover"
+                      />
                       <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-brand-indigo text-white text-[9px] font-bold flex items-center justify-center rounded-full">
                         {item.qty}
                       </span>

@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { formatPrice } from "@/lib/storefront";
 import type { ProductListItem } from "@/lib/storefront";
-import ImagePlaceholder from "./ImagePlaceholder";
-import SmartImage from "./SmartImage";
+import ProductImage, { PLACEHOLDER } from "./ProductImage";
 
 export default function ProductCard({ product }: { product: ProductListItem }) {
   const [primary, secondary] = product.images;
@@ -12,29 +11,23 @@ export default function ProductCard({ product }: { product: ProductListItem }) {
     <Link href={`/products/${product.slug}`} className="group block">
       {/* Image area */}
       <div className="aspect-[4/5] overflow-hidden bg-brand-surface relative">
-        {primary ? (
-          <>
-            <SmartImage
-              src={primary.url}
-              alt={primary.alt ?? product.name}
-              fill
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className={`object-cover transition-all duration-700 group-hover:scale-[1.03] ${
-                secondary ? "group-hover:opacity-0" : ""
-              }`}
-            />
-            {secondary && (
-              <SmartImage
-                src={secondary.url}
-                alt={secondary.alt ?? product.name}
-                fill
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className="object-cover opacity-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-700"
-              />
-            )}
-          </>
-        ) : (
-          <ImagePlaceholder alt={product.name} />
+        <ProductImage
+          src={primary?.url ?? PLACEHOLDER}
+          alt={primary?.alt ?? product.name}
+          fill
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          className={`object-cover transition-all duration-700 group-hover:scale-[1.03] ${
+            secondary ? "group-hover:opacity-0" : ""
+          }`}
+        />
+        {secondary && (
+          <ProductImage
+            src={secondary.url}
+            alt={secondary.alt ?? product.name}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            className="object-cover opacity-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-700"
+          />
         )}
 
         {product.featured && (

@@ -6,31 +6,31 @@ const url = process.env.DATABASE_URL;
 if (!url) throw new Error("DATABASE_URL is not set");
 const prisma = new PrismaClient({ adapter: new PrismaPg(url) });
 
-// Convert BDT (taka) to paisa (integer minor units)
 const bdt = (amount: number) => amount * 100;
+const PH = "/assets/placeholder.png";
 
 async function main() {
   // ── Categories ──────────────────────────────────────────────────────────────
   const [men, women, outerwear, accessories] = await Promise.all([
     prisma.category.upsert({
       where: { slug: "men" },
-      update: {},
-      create: { name: "Men", slug: "men", image: "/assets/categories/men.jpg" },
+      update: { image: PH },
+      create: { name: "Men", slug: "men", image: PH },
     }),
     prisma.category.upsert({
       where: { slug: "women" },
-      update: {},
-      create: { name: "Women", slug: "women", image: "/assets/categories/women.jpg" },
+      update: { image: PH },
+      create: { name: "Women", slug: "women", image: PH },
     }),
     prisma.category.upsert({
       where: { slug: "outerwear" },
-      update: {},
-      create: { name: "Outerwear", slug: "outerwear", image: "/assets/categories/outerwear.jpg" },
+      update: { image: PH },
+      create: { name: "Outerwear", slug: "outerwear", image: PH },
     }),
     prisma.category.upsert({
       where: { slug: "accessories" },
-      update: {},
-      create: { name: "Accessories", slug: "accessories", image: "/assets/categories/accessories.jpg" },
+      update: { image: PH },
+      create: { name: "Accessories", slug: "accessories", image: PH },
     }),
   ]);
 
@@ -38,48 +38,48 @@ async function main() {
   const [heritage, newArrivals, bestSellers, limitedEdition] = await Promise.all([
     prisma.collection.upsert({
       where: { slug: "heritage" },
-      update: {},
+      update: { image: PH },
       create: {
         name: "Heritage",
         slug: "heritage",
         description: "Our founding range — selvedge and raw denim sourced from century-old mills.",
-        image: "/assets/collections/heritage.jpg",
+        image: PH,
         featured: true,
         sortOrder: 1,
       },
     }),
     prisma.collection.upsert({
       where: { slug: "new-arrivals" },
-      update: {},
+      update: { image: PH },
       create: {
         name: "New Arrivals",
         slug: "new-arrivals",
         description: "The latest drops from Blue Heritage Denim.",
-        image: "/assets/collections/new-arrivals.jpg",
+        image: PH,
         featured: true,
         sortOrder: 2,
       },
     }),
     prisma.collection.upsert({
       where: { slug: "best-sellers" },
-      update: {},
+      update: { image: PH },
       create: {
         name: "Best Sellers",
         slug: "best-sellers",
         description: "The cuts our customers keep coming back for.",
-        image: "/assets/collections/best-sellers.jpg",
+        image: PH,
         featured: false,
         sortOrder: 3,
       },
     }),
     prisma.collection.upsert({
       where: { slug: "limited-edition" },
-      update: {},
+      update: { image: PH },
       create: {
         name: "Limited Edition",
         slug: "limited-edition",
         description: "Small-batch production. Once they're gone, they're gone.",
-        image: "/assets/collections/limited-edition.jpg",
+        image: PH,
         featured: true,
         sortOrder: 4,
       },
@@ -101,9 +101,9 @@ async function main() {
       categoryId: men.id,
       collections: [heritage.id, bestSellers.id],
       images: [
-        { url: "/assets/products/selvedge-straight-1.jpg", alt: "Selvedge Straight front", position: 0 },
-        { url: "/assets/products/selvedge-straight-2.jpg", alt: "Selvedge Straight back", position: 1 },
-        { url: "/assets/products/selvedge-straight-3.jpg", alt: "Selvedge Straight detail", position: 2 },
+        { url: PH, alt: "Selvedge Straight front", position: 0 },
+        { url: PH, alt: "Selvedge Straight back", position: 1 },
+        { url: PH, alt: "Selvedge Straight detail", position: 2 },
       ],
       variants: [
         { size: "28", wash: "Raw Indigo", sku: "SS-28-RAW", stock: 12 },
@@ -160,8 +160,8 @@ async function main() {
       categoryId: men.id,
       collections: [newArrivals.id],
       images: [
-        { url: "/assets/products/relaxed-taper-1.jpg", alt: "Relaxed Taper front", position: 0 },
-        { url: "/assets/products/relaxed-taper-2.jpg", alt: "Relaxed Taper back", position: 1 },
+        { url: PH, alt: "Relaxed Taper front", position: 0 },
+        { url: PH, alt: "Relaxed Taper back", position: 1 },
       ],
       variants: [
         { size: "30", wash: "Vintage Indigo", sku: "RT-30-VI", stock: 14 },
@@ -184,8 +184,8 @@ async function main() {
       categoryId: men.id,
       collections: [limitedEdition.id],
       images: [
-        { url: "/assets/products/wide-leg-worker-1.jpg", alt: "Wide Leg Worker front", position: 0 },
-        { url: "/assets/products/wide-leg-worker-2.jpg", alt: "Wide Leg Worker back", position: 1 },
+        { url: PH, alt: "Wide Leg Worker front", position: 0 },
+        { url: PH, alt: "Wide Leg Worker back", position: 1 },
       ],
       variants: [
         { size: "30", wash: "Ecru", sku: "WLW-30-EC", stock: 6 },
@@ -207,7 +207,7 @@ async function main() {
       categoryId: men.id,
       collections: [newArrivals.id],
       images: [
-        { url: "/assets/products/5-pocket-chino-1.jpg", alt: "5-Pocket Chino front", position: 0 },
+        { url: PH, alt: "5-Pocket Chino front", position: 0 },
       ],
       variants: [
         { size: "30", wash: "Khaki", sku: "5PC-30-KH", stock: 15 },
@@ -231,8 +231,8 @@ async function main() {
       categoryId: women.id,
       collections: [heritage.id, bestSellers.id],
       images: [
-        { url: "/assets/products/high-rise-straight-1.jpg", alt: "High Rise Straight front", position: 0 },
-        { url: "/assets/products/high-rise-straight-2.jpg", alt: "High Rise Straight back", position: 1 },
+        { url: PH, alt: "High Rise Straight front", position: 0 },
+        { url: PH, alt: "High Rise Straight back", position: 1 },
       ],
       variants: [
         { size: "24", wash: "Raw Indigo", sku: "HRS-24-RAW", stock: 8 },
@@ -256,8 +256,8 @@ async function main() {
       categoryId: women.id,
       collections: [newArrivals.id, limitedEdition.id],
       images: [
-        { url: "/assets/products/barrel-leg-1.jpg", alt: "Barrel Leg front", position: 0 },
-        { url: "/assets/products/barrel-leg-2.jpg", alt: "Barrel Leg back", position: 1 },
+        { url: PH, alt: "Barrel Leg front", position: 0 },
+        { url: PH, alt: "Barrel Leg back", position: 1 },
       ],
       variants: [
         { size: "24", wash: "Light Vintage", sku: "BL-24-LV", stock: 5 },
@@ -280,8 +280,8 @@ async function main() {
       categoryId: women.id,
       collections: [bestSellers.id],
       images: [
-        { url: "/assets/products/slim-ankle-1.jpg", alt: "Slim Ankle front", position: 0 },
-        { url: "/assets/products/slim-ankle-2.jpg", alt: "Slim Ankle side", position: 1 },
+        { url: PH, alt: "Slim Ankle front", position: 0 },
+        { url: PH, alt: "Slim Ankle side", position: 1 },
       ],
       variants: [
         { size: "24", wash: "Midnight", sku: "SA-24-MN", stock: 10 },
@@ -304,7 +304,7 @@ async function main() {
       categoryId: women.id,
       collections: [newArrivals.id],
       images: [
-        { url: "/assets/products/wide-leg-trouser-1.jpg", alt: "Wide Leg Trouser front", position: 0 },
+        { url: PH, alt: "Wide Leg Trouser front", position: 0 },
       ],
       variants: [
         { size: "24", wash: "Ecru", sku: "WLT-24-EC", stock: 6 },
@@ -327,9 +327,9 @@ async function main() {
       categoryId: outerwear.id,
       collections: [heritage.id, limitedEdition.id],
       images: [
-        { url: "/assets/products/selvedge-chore-coat-1.jpg", alt: "Selvedge Chore Coat front", position: 0 },
-        { url: "/assets/products/selvedge-chore-coat-2.jpg", alt: "Selvedge Chore Coat back", position: 1 },
-        { url: "/assets/products/selvedge-chore-coat-3.jpg", alt: "Selvedge Chore Coat detail", position: 2 },
+        { url: PH, alt: "Selvedge Chore Coat front", position: 0 },
+        { url: PH, alt: "Selvedge Chore Coat back", position: 1 },
+        { url: PH, alt: "Selvedge Chore Coat detail", position: 2 },
       ],
       variants: [
         { size: "S", wash: "Raw Indigo", sku: "SCC-S-RAW", stock: 4 },
@@ -350,8 +350,8 @@ async function main() {
       categoryId: outerwear.id,
       collections: [newArrivals.id, bestSellers.id],
       images: [
-        { url: "/assets/products/denim-overshirt-1.jpg", alt: "Denim Overshirt front", position: 0 },
-        { url: "/assets/products/denim-overshirt-2.jpg", alt: "Denim Overshirt detail", position: 1 },
+        { url: PH, alt: "Denim Overshirt front", position: 0 },
+        { url: PH, alt: "Denim Overshirt detail", position: 1 },
       ],
       variants: [
         { size: "S", wash: "Light Blue", sku: "DO-S-LB", stock: 8 },
@@ -376,7 +376,7 @@ async function main() {
       categoryId: men.id,
       collections: [bestSellers.id],
       images: [
-        { url: "/assets/products/western-denim-shirt-1.jpg", alt: "Western Denim Shirt front", position: 0 },
+        { url: PH, alt: "Western Denim Shirt front", position: 0 },
       ],
       variants: [
         { size: "S", wash: "Indigo", sku: "WDS-S-IN", stock: 10 },
@@ -401,7 +401,7 @@ async function main() {
       categoryId: accessories.id,
       collections: [heritage.id],
       images: [
-        { url: "/assets/products/selvedge-canvas-belt-1.jpg", alt: "Selvedge Canvas Belt", position: 0 },
+        { url: PH, alt: "Selvedge Canvas Belt", position: 0 },
       ],
       variants: [
         { size: "S (28–32)", wash: "Indigo", sku: "SCB-S-IN", stock: 20 },
@@ -421,8 +421,8 @@ async function main() {
       categoryId: accessories.id,
       collections: [newArrivals.id],
       images: [
-        { url: "/assets/products/heritage-tote-1.jpg", alt: "Heritage Tote front", position: 0 },
-        { url: "/assets/products/heritage-tote-2.jpg", alt: "Heritage Tote interior", position: 1 },
+        { url: PH, alt: "Heritage Tote front", position: 0 },
+        { url: PH, alt: "Heritage Tote interior", position: 1 },
       ],
       variants: [
         { size: "One Size", wash: "Natural Canvas", sku: "HT-OS-NC", stock: 18 },
@@ -441,8 +441,8 @@ async function main() {
       categoryId: accessories.id,
       collections: [heritage.id, limitedEdition.id],
       images: [
-        { url: "/assets/products/japanese-selvedge-cap-1.jpg", alt: "Selvedge Cap front", position: 0 },
-        { url: "/assets/products/japanese-selvedge-cap-2.jpg", alt: "Selvedge Cap back", position: 1 },
+        { url: PH, alt: "Selvedge Cap front", position: 0 },
+        { url: PH, alt: "Selvedge Cap back", position: 1 },
       ],
       variants: [
         { size: "One Size", wash: "Raw Indigo", sku: "JSC-OS-RAW", stock: 30 },
@@ -473,6 +473,14 @@ async function main() {
   }
 
   console.log(`✓ Seeded ${products.length} products across 4 categories and 4 collections.`);
+
+  // ── Fix existing broken product image URLs in the DB ─────────────────────────
+  // Any image still pointing at the old /assets/products/ path gets replaced.
+  const imgFix = await prisma.productImage.updateMany({
+    where: { url: { startsWith: "/assets/products/" } },
+    data: { url: PH },
+  });
+  if (imgFix.count > 0) console.log(`✓ Fixed ${imgFix.count} broken product image URLs.`);
 
   // ── Blog posts ───────────────────────────────────────────────────────────────
   const blogPosts = [
@@ -510,10 +518,7 @@ Always wash in cold water. Hot water shrinks denim and degrades the indigo dye m
 This protects the outer face of the denim from friction during the wash cycle, which is the primary cause of uneven fading. It also prevents indigo from transferring onto other garments.
 
 **Dry flat or hang**
-Tumble drying is the enemy of heritage denim. The heat shrinks the fabric and the tumbling action stresses the seams. Hang your denim by the waistband — it will retain its shape and dry to a better fit.
-
-**Storage**
-Fold your denim along the leg seam and store flat, or hang by the belt loops. Never store denim compressed — the creases set permanently.`,
+Tumble drying is the enemy of heritage denim. The heat shrinks the fabric and the tumbling action stresses the seams. Hang your denim by the waistband — it will retain its shape and dry to a better fit.`,
       status: PostStatus.Published,
     },
     {
@@ -536,10 +541,7 @@ More room in the seat and thigh, tapering from the knee down. Designed for peopl
 Sits at the natural waist and falls in a clean, straight line. The 11oz Japanese stretch-selvedge is forgiving across the hip while maintaining the visible selvedge ID stripe that signals quality.
 
 **The Barrel Leg (Women's)**
-Wide at the knee, cinched at the ankle. A more directional silhouette that requires a confident approach to styling, but is incredibly flattering on a wide range of body types. The cotton-linen blend keeps it cool in warmer months.
-
-**A note on sizing**
-All Blue Heritage Denim pieces are cut to actual body measurements, not vanity sizing. If you are between sizes, we recommend sizing up — the fabric will ease in over time.`,
+Wide at the knee, cinched at the ankle. A more directional silhouette that requires a confident approach to styling, but is incredibly flattering on a wide range of body types. The cotton-linen blend keeps it cool in warmer months.`,
       status: PostStatus.Published,
     },
   ];

@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
-import SmartImage from "@/components/shop/SmartImage";
-import ImagePlaceholder from "@/components/shop/ImagePlaceholder";
+import ProductImage, { PLACEHOLDER } from "@/components/shop/ProductImage";
 
 const FLAT_SHIPPING = 12000; // ৳120 in paisa
 const FREE_THRESHOLD = 200000; // ৳2,000 in paisa
@@ -74,17 +73,13 @@ export default function CartPage() {
               >
                 {/* Image */}
                 <div className="w-20 aspect-[3/4] relative overflow-hidden bg-brand-surface shrink-0">
-                  {item.imageUrl ? (
-                    <SmartImage
-                      src={item.imageUrl}
-                      alt={item.productName}
-                      fill
-                      sizes="80px"
-                      className="object-cover"
-                    />
-                  ) : (
-                    <ImagePlaceholder alt={item.productName} />
-                  )}
+                  <ProductImage
+                    src={item.imageUrl ?? PLACEHOLDER}
+                    alt={item.productName}
+                    fill
+                    sizes="80px"
+                    className="object-cover"
+                  />
                 </div>
 
                 {/* Name + variant */}

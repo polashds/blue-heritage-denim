@@ -1,8 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { getCollections } from "@/lib/storefront";
-import ImagePlaceholder from "@/components/shop/ImagePlaceholder";
-import SmartImage from "@/components/shop/SmartImage";
+import ProductImage, { PLACEHOLDER } from "@/components/shop/ProductImage";
 
 export const metadata: Metadata = {
   title: "Collections",
@@ -36,17 +35,13 @@ export default async function CollectionsPage() {
           >
             {/* Image */}
             <div className="aspect-[16/9] relative overflow-hidden bg-brand-surface">
-              {col.image ? (
-                <SmartImage
-                  src={col.image}
-                  alt={col.name}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                />
-              ) : (
-                <ImagePlaceholder alt={col.name} />
-              )}
+              <ProductImage
+                src={col.image ?? PLACEHOLDER}
+                alt={col.name}
+                fill
+                sizes="(max-width: 640px) 100vw, 50vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              />
               {col.featured && (
                 <span className="absolute top-4 left-4 font-body text-[8px] font-semibold tracking-[0.2em] uppercase bg-brand-indigo text-white px-2.5 py-1.5">
                   Featured

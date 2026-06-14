@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
-import SmartImage from "@/components/shop/SmartImage";
-import ImagePlaceholder from "@/components/shop/ImagePlaceholder";
+import ProductImage, { PLACEHOLDER } from "@/components/shop/ProductImage";
 
 export default function CartDrawer() {
   const { items, drawerOpen, closeDrawer, removeItem, updateQty, subtotal, count } =
@@ -94,17 +93,13 @@ export default function CartDrawer() {
               <div key={item.key} className="flex gap-4">
                 {/* Thumbnail */}
                 <div className="w-[72px] aspect-[3/4] shrink-0 relative overflow-hidden bg-brand-surface">
-                  {item.imageUrl ? (
-                    <SmartImage
-                      src={item.imageUrl}
-                      alt={item.productName}
-                      fill
-                      sizes="72px"
-                      className="object-cover"
-                    />
-                  ) : (
-                    <ImagePlaceholder alt={item.productName} />
-                  )}
+                  <ProductImage
+                    src={item.imageUrl ?? PLACEHOLDER}
+                    alt={item.productName}
+                    fill
+                    sizes="72px"
+                    className="object-cover"
+                  />
                 </div>
 
                 {/* Details */}
