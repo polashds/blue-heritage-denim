@@ -4,12 +4,12 @@ export const brand = {
   description:
     "Blue Heritage Denim crafts premium heritage denim — built with exceptional materials, designed for modern everyday life. Free shipping on orders over ৳2,000.",
   logo: "/assets/logo.png",
-  email: "hello@blueheritageenim.com",
+  email: "hello@blueheritaɡedenim.com",
   phone: "+880 1700-000000",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://blueheritageenim.com",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://blueheritaɡedenim.com",
   social: {
     instagram: "#",
-    facebook: "#",
+    facebook: "https://www.facebook.com/profile.php?id=61589687601812",
     tiktok: "#",
     pinterest: "#",
   },

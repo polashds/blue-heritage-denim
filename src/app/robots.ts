@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://byteflowailabs.com";
+import { brand } from "@/config/branding";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -9,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/admin/",
     },
-    sitemap: `${BASE}/sitemap.xml`,
+    sitemap: `${brand.siteUrl}/sitemap.xml`,
   };
 }

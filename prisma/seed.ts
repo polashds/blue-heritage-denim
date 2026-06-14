@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { PrismaClient, ProductStatus } from "@prisma/client";
+import { PrismaClient, ProductStatus, PostStatus } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 const url = process.env.DATABASE_URL;
@@ -473,6 +473,86 @@ async function main() {
   }
 
   console.log(`✓ Seeded ${products.length} products across 4 categories and 4 collections.`);
+
+  // ── Blog posts ───────────────────────────────────────────────────────────────
+  const blogPosts = [
+    {
+      title: "Breaking In Your First Pair of Raw Denim",
+      slug: "breaking-in-raw-denim",
+      excerpt:
+        "Raw denim is sold unwashed — the indigo is vivid, the fabric is stiff, and the fades you earn are entirely your own. Here's how to approach the first few months.",
+      body: `Raw denim requires patience. The indigo dye sits on the surface of the yarn rather than penetrating it, which means every crease, fold, and friction point you create will eventually produce a unique fade pattern that is impossible to replicate.
+
+**The first 30 days**
+Wear your new pair as much as possible before the first wash. The fabric needs time to conform to your body and develop the tension lines that become your personal whiskers and honeycombs. Avoid rain and prolonged contact with water — the dye will bleed and, more importantly, wet denim loses its shape before it has had time to set.
+
+**Washing**
+When the time comes — typically after six months of regular wear — turn the jeans inside out and submerge them in cold water with a small amount of pH-neutral soap. Do not machine wash. Agitation breaks down the indigo before the fabric has fully settled. Hang dry only, never tumble dry.
+
+**What to expect**
+By the end of the first year, your raw denim will be entirely unique. The fades at the thigh, the stacking at the hem, the lines at the back of the knee — these are your fades, earned through your daily life. That is the point.`,
+      status: PostStatus.Published,
+    },
+    {
+      title: "How to Care for Heritage Denim: A Complete Guide",
+      slug: "heritage-denim-care-guide",
+      excerpt:
+        "Most denim problems — shrinkage, blowouts, premature fading — come from washing it wrong. A few simple rules change everything.",
+      body: `Heritage denim is built to last, but it does require different care than the fast-fashion alternatives. The good news: caring for it properly is simpler, not harder.
+
+**Wash less, not more**
+Denim does not need to be washed after every wear. The fibres are robust and the fabric breathes. Most pairs can go four to six wears between washes, and with raw denim, considerably longer. Airing your denim between wears — hanging it outside or near a window — removes odour without stressing the fabric.
+
+**Temperature matters**
+Always wash in cold water. Hot water shrinks denim and degrades the indigo dye more rapidly. The fibres in selvedge and ring-spun cotton have been twisted more tightly than in standard denim, which means they respond more dramatically to heat.
+
+**Turn them inside out**
+This protects the outer face of the denim from friction during the wash cycle, which is the primary cause of uneven fading. It also prevents indigo from transferring onto other garments.
+
+**Dry flat or hang**
+Tumble drying is the enemy of heritage denim. The heat shrinks the fabric and the tumbling action stresses the seams. Hang your denim by the waistband — it will retain its shape and dry to a better fit.
+
+**Storage**
+Fold your denim along the leg seam and store flat, or hang by the belt loops. Never store denim compressed — the creases set permanently.`,
+      status: PostStatus.Published,
+    },
+    {
+      title: "The Five Fits: Which Silhouette Is Right for You?",
+      slug: "five-fits-which-silhouette",
+      excerpt:
+        "From the Selvedge Straight to the Barrel Leg, every cut we make has a distinct personality. This guide helps you find your fit.",
+      body: `At Blue Heritage Denim, we make a deliberately small number of silhouettes. Each one has been developed with a specific purpose and body type in mind. Here's how to think through the decision.
+
+**The Selvedge Straight**
+Our flagship. A true straight leg from hip to hem — the same width at the knee as at the ankle. Works best on taller, leaner frames, and on anyone who wants a cut that genuinely improves with age. The 14oz selvedge creates structure that cheaper denim cannot.
+
+**The Heritage Slim**
+A modern update to the straight — tapered through the thigh and knee, with a slightly slimmer hem opening. More forgiving than a true slim, and the 12oz ring-spun cotton has just enough stretch for all-day comfort. This is our most versatile cut.
+
+**The Relaxed Taper**
+More room in the seat and thigh, tapering from the knee down. Designed for people who find standard sizing too restrictive across the hip and thigh. The taper prevents the wider cut from looking sloppy.
+
+**The High Rise Straight (Women's)**
+Sits at the natural waist and falls in a clean, straight line. The 11oz Japanese stretch-selvedge is forgiving across the hip while maintaining the visible selvedge ID stripe that signals quality.
+
+**The Barrel Leg (Women's)**
+Wide at the knee, cinched at the ankle. A more directional silhouette that requires a confident approach to styling, but is incredibly flattering on a wide range of body types. The cotton-linen blend keeps it cool in warmer months.
+
+**A note on sizing**
+All Blue Heritage Denim pieces are cut to actual body measurements, not vanity sizing. If you are between sizes, we recommend sizing up — the fabric will ease in over time.`,
+      status: PostStatus.Published,
+    },
+  ];
+
+  for (const post of blogPosts) {
+    await prisma.post.upsert({
+      where: { slug: post.slug },
+      update: {},
+      create: post,
+    });
+  }
+
+  console.log(`✓ Seeded ${blogPosts.length} blog posts.`);
 }
 
 main()

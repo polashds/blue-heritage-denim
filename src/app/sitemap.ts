@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/db";
 import { PostStatus } from "@prisma/client";
+import { brand } from "@/config/branding";
 
 export const dynamic = "force-dynamic";
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://blueheritageenim.com";
+const BASE = brand.siteUrl;
 
 const staticRoutes: MetadataRoute.Sitemap = [
   { url: BASE, changeFrequency: "weekly", priority: 1 },

@@ -7,25 +7,24 @@ import { PostStatus } from "@prisma/client";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Blog — ByteFlow AI Labs",
+  title: "Journal — Blue Heritage Denim",
   description:
-    "Insights, tutorials, and case studies on AI automation, n8n workflows, WhatsApp bots, and AI agent development from the ByteFlow AI Labs team.",
+    "Care guides, style notes, and denim heritage from the Blue Heritage Denim team.",
   keywords: [
-    "AI automation blog",
-    "n8n tutorial",
-    "WhatsApp automation guide",
-    "AI consulting insights",
+    "denim care guide",
+    "raw denim break-in",
+    "heritage denim",
+    "denim culture",
+    "selvedge denim tips",
   ],
   openGraph: {
-    title: "Blog — ByteFlow AI Labs",
-    description:
-      "Practical insights on AI automation, n8n, WhatsApp bots, and AI agent development.",
+    title: "Journal — Blue Heritage Denim",
+    description: "Care guides, style notes, and denim heritage from Blue Heritage Denim.",
     url: "/blog",
   },
   twitter: {
-    title: "Blog — ByteFlow AI Labs",
-    description:
-      "Practical insights on AI automation, n8n workflows, and WhatsApp bots from ByteFlow AI Labs.",
+    title: "Journal — Blue Heritage Denim",
+    description: "Care guides, style notes, and denim heritage from Blue Heritage Denim.",
   },
 };
 
@@ -48,26 +47,26 @@ export default async function BlogPage() {
     <div className="bg-brand-bg">
       {/* Hero */}
       <section className="relative py-24 overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(37,99,235,0.10)_0%,transparent_65%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(43,84,137,0.08)_0%,transparent_65%)]" />
         <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-8 text-center">
           <div className="flex items-center justify-center gap-4 mb-8">
-            <span className="h-px w-8 bg-primary/40" />
-            <p className="font-body text-[10px] font-medium tracking-[0.35em] text-accent uppercase">
-              Insights &amp; Guides
+            <span className="h-px w-8 bg-brand-border" />
+            <p className="font-body text-[10px] font-medium tracking-[0.35em] text-brand-muted uppercase">
+              Guides &amp; Culture
             </p>
-            <span className="h-px w-8 bg-primary/40" />
+            <span className="h-px w-8 bg-brand-border" />
           </div>
-          <h1 className="font-heading font-semibold text-brand-text text-5xl sm:text-6xl leading-[1.08]">
-            The ByteFlow{" "}
+          <h1 className="font-heading font-semibold text-brand-indigo text-5xl sm:text-6xl leading-[1.08]">
+            The Heritage{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #2563EB, #22D3EE)",
+                background: "linear-gradient(135deg, #1E3A5F, #2B5489)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
             >
-              Blog
+              Journal
             </span>
           </h1>
         </div>
@@ -85,7 +84,7 @@ export default async function BlogPage() {
               <Link
                 key={post.id}
                 href={`/blog/${post.slug}`}
-                className="group flex flex-col border border-primary/15 bg-brand-surface hover:border-primary/35 transition-colors overflow-hidden"
+                className="group flex flex-col border border-brand-border bg-brand-surface hover:border-primary/40 transition-colors overflow-hidden"
               >
                 {/* Featured image */}
                 {post.featuredImage ? (
@@ -99,17 +98,17 @@ export default async function BlogPage() {
                     />
                   </div>
                 ) : (
-                  <div className="aspect-video bg-brand-bg flex items-center justify-center border-b border-primary/10">
+                  <div className="aspect-video bg-brand-bg flex items-center justify-center border-b border-brand-border">
                     <span
-                      className="text-5xl font-heading font-semibold opacity-20"
+                      className="text-5xl font-heading font-semibold opacity-15"
                       style={{
-                        background: "linear-gradient(135deg, #2563EB, #22D3EE)",
+                        background: "linear-gradient(135deg, #1E3A5F, #2B5489)",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
                         backgroundClip: "text",
                       }}
                     >
-                      B
+                      BH
                     </span>
                   </div>
                 )}
@@ -118,7 +117,7 @@ export default async function BlogPage() {
                   {/* Category + date */}
                   <div className="flex items-center gap-3 mb-3">
                     {post.category && (
-                      <span className="font-body text-[9px] tracking-[0.25em] uppercase text-accent border border-accent/30 px-2 py-0.5">
+                      <span className="font-body text-[9px] tracking-[0.25em] uppercase text-primary border border-primary/30 px-2 py-0.5">
                         {post.category.name}
                       </span>
                     )}
@@ -127,7 +126,7 @@ export default async function BlogPage() {
                     </span>
                   </div>
 
-                  <h2 className="font-heading font-semibold text-brand-text text-xl leading-snug mb-3 group-hover:text-accent transition-colors">
+                  <h2 className="font-heading font-semibold text-brand-indigo text-xl leading-snug mb-3 group-hover:text-primary transition-colors">
                     {post.title}
                   </h2>
 
@@ -137,7 +136,7 @@ export default async function BlogPage() {
                     </p>
                   )}
 
-                  <p className="mt-4 font-body text-xs text-accent tracking-[0.15em] uppercase">
+                  <p className="mt-4 font-body text-xs text-primary tracking-[0.15em] uppercase">
                     Read More →
                   </p>
                 </div>
