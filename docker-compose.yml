@@ -1,9 +1,11 @@
-name: blue-heritage-app
+name: blue-heritage
 services:
-  app:
+  blue-heritage:
+    container_name: blue-heritage-app
     build:
       context: .
       args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-}
         NEXT_PUBLIC_GA4_ID: ${NEXT_PUBLIC_GA4_ID:-}
         NEXT_PUBLIC_META_PIXEL_ID: ${NEXT_PUBLIC_META_PIXEL_ID:-}
     restart: unless-stopped
@@ -19,14 +21,10 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      - "traefik.http.routers.heritage.rule=Host(`blueheritageenim.com`) || Host(`www.blueheritageenim.com`)"
-      - "traefik.http.routers.heritage.entrypoints=websecure"
-      - "traefik.http.routers.heritage.tls.certresolver=le"
-      - "traefik.http.routers.heritage.middlewares=heritage-www-redirect"
-      - "traefik.http.services.heritage.loadbalancer.server.port=3000"
-      - "traefik.http.middlewares.heritage-www-redirect.redirectregex.regex=^https://www\\.blueheritageenim\\.com/(.*)"
-      - "traefik.http.middlewares.heritage-www-redirect.redirectregex.replacement=https://blueheritageenim.com/$${1}"
-      - "traefik.http.middlewares.heritage-www-redirect.redirectregex.permanent=true"
+      - "traefik.http.routers.blueheritage.rule=Host(`${SITE_DOMAIN}`)"
+      - "traefik.http.routers.blueheritage.entrypoints=websecure"
+      - "traefik.http.routers.blueheritage.tls.certresolver=le"
+      - "traefik.http.services.blueheritage.loadbalancer.server.port=3000"
   db:
     image: postgres:16
     restart: unless-stopped
