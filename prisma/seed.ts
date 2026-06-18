@@ -7,30 +7,30 @@ if (!url) throw new Error("DATABASE_URL is not set");
 const prisma = new PrismaClient({ adapter: new PrismaPg(url) });
 
 const bdt = (amount: number) => amount * 100;
-const PH = "/assets/placeholder.png";
+const PH = "/products/denim-jeans-1.jpg";
 
 async function main() {
   // ── Categories ──────────────────────────────────────────────────────────────
   const [men, women, outerwear, accessories] = await Promise.all([
     prisma.category.upsert({
       where: { slug: "men" },
-      update: { image: PH },
-      create: { name: "Men", slug: "men", image: PH },
+      update: { image: "/products/denim-jeans-1.jpg" },
+      create: { name: "Men", slug: "men", image: "/products/denim-jeans-1.jpg" },
     }),
     prisma.category.upsert({
       where: { slug: "women" },
-      update: { image: PH },
-      create: { name: "Women", slug: "women", image: PH },
+      update: { image: "/products/denim-jeans-2.jpg" },
+      create: { name: "Women", slug: "women", image: "/products/denim-jeans-2.jpg" },
     }),
     prisma.category.upsert({
       where: { slug: "outerwear" },
-      update: { image: PH },
-      create: { name: "Outerwear", slug: "outerwear", image: PH },
+      update: { image: "/products/denim-jacket.jpg" },
+      create: { name: "Outerwear", slug: "outerwear", image: "/products/denim-jacket.jpg" },
     }),
     prisma.category.upsert({
       where: { slug: "accessories" },
-      update: { image: PH },
-      create: { name: "Accessories", slug: "accessories", image: PH },
+      update: { image: "/products/canvas-tote.jpg" },
+      create: { name: "Accessories", slug: "accessories", image: "/products/canvas-tote.jpg" },
     }),
   ]);
 
@@ -38,48 +38,48 @@ async function main() {
   const [heritage, newArrivals, bestSellers, limitedEdition] = await Promise.all([
     prisma.collection.upsert({
       where: { slug: "heritage" },
-      update: { image: PH },
+      update: { image: "/products/denim-detail.jpg" },
       create: {
         name: "Heritage",
         slug: "heritage",
         description: "Our founding range — selvedge and raw denim sourced from century-old mills.",
-        image: PH,
+        image: "/products/denim-detail.jpg",
         featured: true,
         sortOrder: 1,
       },
     }),
     prisma.collection.upsert({
       where: { slug: "new-arrivals" },
-      update: { image: PH },
+      update: { image: "/products/denim-jacket.jpg" },
       create: {
         name: "New Arrivals",
         slug: "new-arrivals",
         description: "The latest drops from Blue Heritage Denim.",
-        image: PH,
+        image: "/products/denim-jacket.jpg",
         featured: true,
         sortOrder: 2,
       },
     }),
     prisma.collection.upsert({
       where: { slug: "best-sellers" },
-      update: { image: PH },
+      update: { image: "/products/denim-jeans-2.jpg" },
       create: {
         name: "Best Sellers",
         slug: "best-sellers",
         description: "The cuts our customers keep coming back for.",
-        image: PH,
+        image: "/products/denim-jeans-2.jpg",
         featured: false,
         sortOrder: 3,
       },
     }),
     prisma.collection.upsert({
       where: { slug: "limited-edition" },
-      update: { image: PH },
+      update: { image: "/products/denim-shirt.jpg" },
       create: {
         name: "Limited Edition",
         slug: "limited-edition",
         description: "Small-batch production. Once they're gone, they're gone.",
-        image: PH,
+        image: "/products/denim-shirt.jpg",
         featured: true,
         sortOrder: 4,
       },
@@ -101,9 +101,8 @@ async function main() {
       categoryId: men.id,
       collections: [heritage.id, bestSellers.id],
       images: [
-        { url: PH, alt: "Selvedge Straight front", position: 0 },
-        { url: PH, alt: "Selvedge Straight back", position: 1 },
-        { url: PH, alt: "Selvedge Straight detail", position: 2 },
+        { url: "/products/denim-jeans-1.jpg", alt: "Selvedge Straight", position: 0 },
+        { url: "/products/denim-detail.jpg", alt: "Selvedge Straight detail", position: 1 },
       ],
       variants: [
         { size: "28", wash: "Raw Indigo", sku: "SS-28-RAW", stock: 12 },
@@ -160,8 +159,8 @@ async function main() {
       categoryId: men.id,
       collections: [newArrivals.id],
       images: [
-        { url: PH, alt: "Relaxed Taper front", position: 0 },
-        { url: PH, alt: "Relaxed Taper back", position: 1 },
+        { url: "/products/denim-jeans-2.jpg", alt: "Relaxed Taper", position: 0 },
+        { url: "/products/denim-detail.jpg", alt: "Relaxed Taper detail", position: 1 },
       ],
       variants: [
         { size: "30", wash: "Vintage Indigo", sku: "RT-30-VI", stock: 14 },
@@ -184,8 +183,8 @@ async function main() {
       categoryId: men.id,
       collections: [limitedEdition.id],
       images: [
-        { url: PH, alt: "Wide Leg Worker front", position: 0 },
-        { url: PH, alt: "Wide Leg Worker back", position: 1 },
+        { url: "/products/denim-jeans-1.jpg", alt: "Wide Leg Worker", position: 0 },
+        { url: "/products/denim-detail.jpg", alt: "Wide Leg Worker detail", position: 1 },
       ],
       variants: [
         { size: "30", wash: "Ecru", sku: "WLW-30-EC", stock: 6 },
@@ -207,7 +206,8 @@ async function main() {
       categoryId: men.id,
       collections: [newArrivals.id],
       images: [
-        { url: PH, alt: "5-Pocket Chino front", position: 0 },
+        { url: "/products/chino.jpg", alt: "5-Pocket Chino", position: 0 },
+        { url: "/products/denim-detail.jpg", alt: "5-Pocket Chino detail", position: 1 },
       ],
       variants: [
         { size: "30", wash: "Khaki", sku: "5PC-30-KH", stock: 15 },
@@ -231,8 +231,7 @@ async function main() {
       categoryId: women.id,
       collections: [heritage.id, bestSellers.id],
       images: [
-        { url: PH, alt: "High Rise Straight front", position: 0 },
-        { url: PH, alt: "High Rise Straight back", position: 1 },
+        { url: "/products/denim-jeans-2.jpg", alt: "High Rise Straight", position: 0 },
       ],
       variants: [
         { size: "24", wash: "Raw Indigo", sku: "HRS-24-RAW", stock: 8 },
@@ -256,8 +255,7 @@ async function main() {
       categoryId: women.id,
       collections: [newArrivals.id, limitedEdition.id],
       images: [
-        { url: PH, alt: "Barrel Leg front", position: 0 },
-        { url: PH, alt: "Barrel Leg back", position: 1 },
+        { url: "/products/denim-jeans-1.jpg", alt: "Barrel Leg", position: 0 },
       ],
       variants: [
         { size: "24", wash: "Light Vintage", sku: "BL-24-LV", stock: 5 },
@@ -280,8 +278,7 @@ async function main() {
       categoryId: women.id,
       collections: [bestSellers.id],
       images: [
-        { url: PH, alt: "Slim Ankle front", position: 0 },
-        { url: PH, alt: "Slim Ankle side", position: 1 },
+        { url: "/products/denim-jeans-2.jpg", alt: "Slim Ankle", position: 0 },
       ],
       variants: [
         { size: "24", wash: "Midnight", sku: "SA-24-MN", stock: 10 },
@@ -304,7 +301,7 @@ async function main() {
       categoryId: women.id,
       collections: [newArrivals.id],
       images: [
-        { url: PH, alt: "Wide Leg Trouser front", position: 0 },
+        { url: "/products/trouser.jpg", alt: "Wide Leg Trouser", position: 0 },
       ],
       variants: [
         { size: "24", wash: "Ecru", sku: "WLT-24-EC", stock: 6 },
@@ -327,9 +324,7 @@ async function main() {
       categoryId: outerwear.id,
       collections: [heritage.id, limitedEdition.id],
       images: [
-        { url: PH, alt: "Selvedge Chore Coat front", position: 0 },
-        { url: PH, alt: "Selvedge Chore Coat back", position: 1 },
-        { url: PH, alt: "Selvedge Chore Coat detail", position: 2 },
+        { url: "/products/denim-jacket.jpg", alt: "Selvedge Chore Coat", position: 0 },
       ],
       variants: [
         { size: "S", wash: "Raw Indigo", sku: "SCC-S-RAW", stock: 4 },
@@ -350,8 +345,7 @@ async function main() {
       categoryId: outerwear.id,
       collections: [newArrivals.id, bestSellers.id],
       images: [
-        { url: PH, alt: "Denim Overshirt front", position: 0 },
-        { url: PH, alt: "Denim Overshirt detail", position: 1 },
+        { url: "/products/denim-jacket.jpg", alt: "Denim Overshirt", position: 0 },
       ],
       variants: [
         { size: "S", wash: "Light Blue", sku: "DO-S-LB", stock: 8 },
@@ -376,7 +370,7 @@ async function main() {
       categoryId: men.id,
       collections: [bestSellers.id],
       images: [
-        { url: PH, alt: "Western Denim Shirt front", position: 0 },
+        { url: "/products/denim-shirt.jpg", alt: "Western Denim Shirt", position: 0 },
       ],
       variants: [
         { size: "S", wash: "Indigo", sku: "WDS-S-IN", stock: 10 },
@@ -401,7 +395,7 @@ async function main() {
       categoryId: accessories.id,
       collections: [heritage.id],
       images: [
-        { url: PH, alt: "Selvedge Canvas Belt", position: 0 },
+        { url: "/products/denim-detail.jpg", alt: "Selvedge Canvas Belt", position: 0 },
       ],
       variants: [
         { size: "S (28–32)", wash: "Indigo", sku: "SCB-S-IN", stock: 20 },
@@ -421,8 +415,7 @@ async function main() {
       categoryId: accessories.id,
       collections: [newArrivals.id],
       images: [
-        { url: PH, alt: "Heritage Tote front", position: 0 },
-        { url: PH, alt: "Heritage Tote interior", position: 1 },
+        { url: "/products/canvas-tote.jpg", alt: "Heritage Tote", position: 0 },
       ],
       variants: [
         { size: "One Size", wash: "Natural Canvas", sku: "HT-OS-NC", stock: 18 },
@@ -441,8 +434,7 @@ async function main() {
       categoryId: accessories.id,
       collections: [heritage.id, limitedEdition.id],
       images: [
-        { url: PH, alt: "Selvedge Cap front", position: 0 },
-        { url: PH, alt: "Selvedge Cap back", position: 1 },
+        { url: "/products/denim-cap.jpg", alt: "Japanese Selvedge Cap", position: 0 },
       ],
       variants: [
         { size: "One Size", wash: "Raw Indigo", sku: "JSC-OS-RAW", stock: 30 },
@@ -481,6 +473,102 @@ async function main() {
     data: { url: PH },
   });
   if (imgFix.count > 0) console.log(`✓ Fixed ${imgFix.count} broken product image URLs.`);
+
+  // ── Replace placeholder images with real product photos ─────────────────────
+  // Runs every seed so existing records always get real images.
+  // Heritage Slim is excluded — it already has its own real images.
+  type ImgDef = { url: string; alt: string; position: number };
+  const imageFixups: Array<{ slug: string; images: ImgDef[] }> = [
+    {
+      slug: "selvedge-straight",
+      images: [
+        { url: "/products/denim-jeans-1.jpg", alt: "Selvedge Straight", position: 0 },
+        { url: "/products/denim-detail.jpg", alt: "Selvedge Straight detail", position: 1 },
+      ],
+    },
+    {
+      slug: "relaxed-taper",
+      images: [
+        { url: "/products/denim-jeans-2.jpg", alt: "Relaxed Taper", position: 0 },
+        { url: "/products/denim-detail.jpg", alt: "Relaxed Taper detail", position: 1 },
+      ],
+    },
+    {
+      slug: "wide-leg-worker",
+      images: [
+        { url: "/products/denim-jeans-1.jpg", alt: "Wide Leg Worker", position: 0 },
+        { url: "/products/denim-detail.jpg", alt: "Wide Leg Worker detail", position: 1 },
+      ],
+    },
+    {
+      slug: "5-pocket-chino",
+      images: [
+        { url: "/products/chino.jpg", alt: "5-Pocket Chino", position: 0 },
+        { url: "/products/denim-detail.jpg", alt: "5-Pocket Chino detail", position: 1 },
+      ],
+    },
+    {
+      slug: "high-rise-straight",
+      images: [{ url: "/products/denim-jeans-2.jpg", alt: "High Rise Straight", position: 0 }],
+    },
+    {
+      slug: "barrel-leg",
+      images: [{ url: "/products/denim-jeans-1.jpg", alt: "Barrel Leg", position: 0 }],
+    },
+    {
+      slug: "slim-ankle",
+      images: [{ url: "/products/denim-jeans-2.jpg", alt: "Slim Ankle", position: 0 }],
+    },
+    {
+      slug: "wide-leg-trouser",
+      images: [{ url: "/products/trouser.jpg", alt: "Wide Leg Trouser", position: 0 }],
+    },
+    {
+      slug: "selvedge-chore-coat",
+      images: [{ url: "/products/denim-jacket.jpg", alt: "Selvedge Chore Coat", position: 0 }],
+    },
+    {
+      slug: "denim-overshirt",
+      images: [{ url: "/products/denim-jacket.jpg", alt: "Denim Overshirt", position: 0 }],
+    },
+    {
+      slug: "western-denim-shirt",
+      images: [{ url: "/products/denim-shirt.jpg", alt: "Western Denim Shirt", position: 0 }],
+    },
+    {
+      slug: "selvedge-canvas-belt",
+      images: [{ url: "/products/denim-detail.jpg", alt: "Selvedge Canvas Belt", position: 0 }],
+    },
+    {
+      slug: "heritage-tote",
+      images: [{ url: "/products/canvas-tote.jpg", alt: "Heritage Tote", position: 0 }],
+    },
+    {
+      slug: "japanese-selvedge-cap",
+      images: [{ url: "/products/denim-cap.jpg", alt: "Japanese Selvedge Cap", position: 0 }],
+    },
+  ];
+
+  let fixedProducts = 0;
+  for (const { slug, images } of imageFixups) {
+    const product = await prisma.product.findUnique({
+      where: { slug },
+      select: { id: true },
+    });
+    if (!product) continue;
+    const placeholderCount = await prisma.productImage.count({
+      where: { productId: product.id, url: "/assets/placeholder.png" },
+    });
+    if (placeholderCount > 0) {
+      await prisma.productImage.deleteMany({ where: { productId: product.id } });
+      await prisma.productImage.createMany({
+        data: images.map((img) => ({ ...img, productId: product.id })),
+      });
+      fixedProducts++;
+    }
+  }
+  if (fixedProducts > 0)
+    console.log(`✓ Replaced placeholder images for ${fixedProducts} products.`);
 
   // ── Blog posts ───────────────────────────────────────────────────────────────
   const blogPosts = [
